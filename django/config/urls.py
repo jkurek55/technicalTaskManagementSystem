@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 class PingView(APIView):
@@ -28,5 +29,7 @@ class PingView(APIView):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/ping', PingView.as_view()),
-    path('api/projects/', include('projects.urls'))
+    path('api/projects/', include('projects.urls')),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
