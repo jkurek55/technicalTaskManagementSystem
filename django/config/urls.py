@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+class PingView(APIView):
+    def get(self, request):
+        return Response({"status": "ok"})
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/ping', PingView.as_view()),
+    path('api/projects/', include('projects.urls'))
 ]
