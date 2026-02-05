@@ -30,6 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/ping', PingView.as_view()),
     path('api/projects/', include('projects.urls')),
+    path('api/tasks/', include('tasks.urls')),
+    path('api/statuses/', include('statuses.urls')),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
