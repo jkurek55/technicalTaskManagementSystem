@@ -6,4 +6,4 @@ from django.db import models
 class Status(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField(blank=True)
-    is_terminal = models.BooleanField()
+    is_terminal = models.BooleanField(default=False)
