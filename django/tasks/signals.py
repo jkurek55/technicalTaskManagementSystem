@@ -7,6 +7,6 @@ from .tasks import send_assignment_email
 def on_task_saved(sender, instance, created, **kwargs):
     # Only notify if assignee exists and was just assigned
     if instance.assignee:
-        return send_assignment_email.delay(instance.id, instance.assignee_id)
+        return send_assignment_email.delay(instance.id)
 
     

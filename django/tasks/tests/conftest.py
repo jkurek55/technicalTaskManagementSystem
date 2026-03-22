@@ -45,6 +45,16 @@ def task(project, status_open):
     )
 
 @pytest.fixture
+def assigned_task(project, status_open, user):
+    from tasks.models import Task
+    return Task.objects.create(
+        title="Test Task",
+        project=project,
+        status=status_open,
+        assignee=user
+    )
+
+@pytest.fixture
 def terminal_task(project, status_terminal):
     from tasks.models import Task
     return Task.objects.create(
