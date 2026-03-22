@@ -4,6 +4,7 @@ from .models import Task, Project
 from django.contrib.auth.models import AbstractBaseUser
 import datetime
 from django.db.models import F
+from .tasks import send_assignment_email
 
 def assign_task(*, task: Task, user: AbstractBaseUser):
     if task.status.is_terminal:
@@ -12,6 +13,9 @@ def assign_task(*, task: Task, user: AbstractBaseUser):
         raise ValidationError("User already assigned")
     task.assignee = user
     task.save()
+    
+    send_assignment_email.delay(task.id)
+
     return task
 
 

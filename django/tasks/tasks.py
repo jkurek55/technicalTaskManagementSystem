@@ -1,28 +1,20 @@
 from celery import shared_task
+from django.core.mail import send_mail
 
 @shared_task
-def notify_task_assigned(task_id, assignee_id):
-    # Import models inside the function — not at the top
-    # This avoids circular imports and app registry issues
-    from tasks.models import Task
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
-
-    task = Task.objects.select_related('project', 'status').get(pk=task_id)
-    assignee = User.objects.get(pk=assignee_id)
-
-    # Simulating email — just print to console for now
-    print(f"""
-    ================================
-    NOTIFICATION EMAIL
-    To: {assignee.email}
-    Subject: You have been assigned to a task
+def send_assignment_email(task_id: int):
+    from .models import Task
     
-    Hi {assignee.username},
-    You have been assigned to task: {task.title}
-    Project: {task.project.name}
-    Status: {task.status.name}
-    ================================
-    """)
-
-    return f'Notification sent to {assignee.username}'
+    task = Task.objects.select_related("assignee", "project").get(pk=task_id)
+    
+    if not task.assignee:
+        return "No assignee, skipping"
+    
+    send_mail(
+        subject=f"[{task.project.name}] You've been assigned: {task.title}",
+        message=f"Task '{task.title}' has been assigned to you. Due: {task.due_date}",
+        from_email="noreply@jira-clone.com",
+        recipient_list=[task.assignee.email],
+    )
+    
+    return f"Email sent to {task.assignee.email}"

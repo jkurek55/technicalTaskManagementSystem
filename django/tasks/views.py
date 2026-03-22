@@ -25,6 +25,10 @@ class CreateTaskView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = TaskSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+
 class ListTasksView(generics.ListAPIView):
     queryset = Task.objects.all()
     permission_classes = [permissions.IsAuthenticated]

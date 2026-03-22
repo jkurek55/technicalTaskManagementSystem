@@ -2,6 +2,7 @@ amqp==5.3.1
 asgiref==3.11.1
 billiard==4.2.4
 celery==5.6.2
+cffi==2.0.0
 click==8.3.1
 click-didyoumean==0.3.1
 click-plugins==1.1.1.2
@@ -14,11 +15,14 @@ django-filter==25.2
 django-redis==6.0.0
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
+gevent==25.9.1
+greenlet==3.3.2
 iniconfig==2.3.0
 kombu==5.6.2
 packaging==26.0
 pluggy==1.6.0
 prompt_toolkit==3.0.52
+pycparser==3.0
 Pygments==2.19.2
 PyJWT==2.11.0
 pytest==9.0.2
@@ -31,3 +35,5 @@ tzdata==2025.3
 tzlocal==5.3.1
 vine==5.1.0
 wcwidth==0.6.0
+zope.event==6.1
+zope.interface==8.2
