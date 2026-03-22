@@ -12,7 +12,7 @@ from django.conf import settings
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    project = models.ForeignKey(Project, on_delete=CASCADE)
+    project = models.ForeignKey(Project, on_delete=CASCADE, related_name='tasks')
     status = models.ForeignKey(Status, on_delete=PROTECT)
     assignee = models.ForeignKey(
         settings.AUTH_USER_MODEL,
